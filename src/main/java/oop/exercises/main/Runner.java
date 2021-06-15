@@ -13,9 +13,9 @@ import java.util.function.IntPredicate;
 
 public class Runner {
 
-    private static final DataReader in = new DataReader();
     private static final int MIN_EXERCISE = 41;
     private static final int MAX_EXERCISE = 46;
+    private static final DataReader in = new DataReader();
     private static final IntPredicate VALIDATE_EXERCISE =
             x -> MIN_EXERCISE <= x && x <= MAX_EXERCISE;
 

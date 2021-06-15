@@ -1,0 +1,58 @@
+@startuml
+
+start
+repeat
+    partition "readExercise()"{
+        :buildPrompt() uses MIN_EXERCISE and MAX_EXERCISE
+        so the user knows range of exercises available;
+        :readIntValidatedWithCondition()
+        ensures that a valid exercise is entered;
+    }
+    partition "runExercise()" {
+        partition "buildMainMethod"{
+            :buildExercisePath()
+            based on exercise number;
+            :getExerciseClass()
+            gets class from path;
+            if(class not found) then (yes)
+                #pink:Throw ClassNotFoundException;
+                -[hidden]->
+                break;
+            else(no)
+                :returns main method from class;
+                if(method not found) then (yes)
+                    #pink:Throw NoSuchMethodException;
+                    -[hidden]->
+                    break;
+                else (no)
+                endif
+            endif
+    }
+        partition "runMainMethod()" {
+            :prints message to console
+            indicating the exercise is launching;
+            :invoke() used on main to launch exercise;
+            if(Inaccessible) then (yes)
+                #pink:Throw IllegalAccessException;
+                -[hidden]->
+                break;
+            else
+                if(Issue Invoking) then (yes)
+                    #pink:Throw InvocationTargetException;
+                    -[hidden]->
+                    break;
+                else (no)
+                endif
+            endif
+        }
+    if(Exception thrown) then (yes)
+        :Display that the exercise could not be run;
+        stop
+    else (no)
+    endif
+    }
+repeat while (runAgain() asks the user if they would like to run another exercise) is (yes)
+->no;
+stop
+
+@enduml
