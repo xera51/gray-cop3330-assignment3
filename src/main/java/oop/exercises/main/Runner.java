@@ -46,8 +46,8 @@ public class Runner {
     }
 
     private boolean runAgain() {
-        String response = in.readString("Run another? (Y/N): ");
-        return response.matches("[Yy].*");
+        String response = in.readString("Run again? (Y/N): ");
+        return response.matches("[Yy]([Ee][Ss])?");
     }
 
     private Method buildMainMethod(int exerciseNumber) throws ClassNotFoundException, NoSuchMethodException {
