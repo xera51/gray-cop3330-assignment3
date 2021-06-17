@@ -1,0 +1,46 @@
+@startuml
+
+class Application {
+    - static final String INFILE_NAME
+    - static final String OUTFILE_NAME
+
+    + main() : String[] args
+}
+
+class FileSorter {
+    - FileSorter()
+
+    + static void sortFileByLines() : String inFilename, String outFilename
+    + static void sortFileByLines() : Path infile, Path outfile
+    + static void sortFileByLines() : Path file
+    + static void sortFileByLines() : String filename
+    + static Stream<String> linesSorted() : String filename
+    + static Stream<String> linesSorted() : Path file
+
+    - static Path getPathByName() : String filename
+}
+
+class FileLoader {
+    - FileLoader()
+
+    + static Path getPathByName() : String filename
+}
+
+class FileHandler {
+    - File file
+
+    + FileHandler() : File file
+    + FileHandler() : String fileName
+    + File getFile()
+    + File setFile() : File file
+    + File setFile() : String fileName
+    + String getName()
+    + String getPath()
+    + String[] lines()
+
+}
+
+FileSorter  ..> FileLoader : uses
+Application ..> FileSorter : uses
+
+@enduml
