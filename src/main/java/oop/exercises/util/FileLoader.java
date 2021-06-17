@@ -1,37 +1,62 @@
 package oop.exercises.util;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import static java.lang.ClassLoader.getSystemClassLoader;
+import java.io.*;
 
 public class FileLoader {
 
-    private static String parent = System.getProperty("user.dir") + "\\src\\main\\resources";
+    private final File searchDir;
 
-    private FileLoader() {}
-
-    public static Path getPath(String filename) {
-        return new File(parent, filename).toPath();
+    public FileLoader() {
+        this(new File(System.getProperty("user.dir")));
     }
 
-    public static Path getResource(String fileName) throws URISyntaxException{
-        return Paths.get(getSystemClassLoader().getResource(fileName).toURI());
+    public FileLoader(String dir) {
+        this(new File(dir));
     }
 
-    public static File getFile(String filename) {
-        return new File(parent, filename);
+    public FileLoader(File dir) {
+        this.searchDir = dir;
     }
 
-    public static void setParent(String filePath) {
-        parent = System.getProperty("user.dir") + filePath;
+    public File getSearchDir() {
+        return searchDir;
     }
 
-    public static String getParent() {
-        return parent;
+    public File getFile(String fileName) {
+        return new File(searchDir, fileName);
+    }
+
+    public File getFile(File file) {
+        return new File(searchDir, file.toString());
+    }
+
+    public BufferedReader getBufferedReader(String fileName)
+            throws IOException {
+        return new BufferedReader(new FileReader(getFile(fileName)));
+    }
+
+    public BufferedReader getBufferedReader(File file)
+            throws IOException {
+        return new BufferedReader(new FileReader(getFile(file)));
+    }
+
+    public BufferedWriter getBufferedWriter(String fileName)
+            throws IOException {
+        return new BufferedWriter(new FileWriter(getFile(fileName)));
+    }
+
+    public BufferedWriter getBufferedWriter(File file)
+            throws IOException {
+        return new BufferedWriter(new FileWriter(getFile(file)));
+    }
+
+    public BufferedWriter getBufferedWriter(String fileName, boolean append)
+            throws IOException {
+        return new BufferedWriter(new FileWriter(getFile(fileName), append));
+    }
+
+    public BufferedWriter getBufferedWriter(File file, boolean append)
+            throws IOException {
+        return new BufferedWriter(new FileWriter(getFile(file), append));
     }
 }
