@@ -1,0 +1,86 @@
+@startuml
+
+package oop.exercises.util #DDDDDD {
+
+    class FileLoader {
+        - searchDir : File
+        __Constructors__
+        + FileLoader() : FileLoader
+        + FileLoader(String dir) : FileLoader
+        + FileLoader(File dir) : FileLoader
+        __Accessors/Mutators__
+        + getSearchDir() : File
+        __Methods__
+        + getFile(String fileName) : File
+        + getFile(File file) : File
+        + getPath(String fileName) : Path
+        + getPath(File file) : Path
+        + getBufferedReader(String fileName) : BufferedReader
+        + getBufferedReader(File file) : BufferedReader
+        + getBufferedWriter(String fileName) : BufferedWriter
+        + getBufferedWriter(File file) : BufferedWriter
+        + getBufferedWriter(String fileName, boolean append) : BufferedWriter
+        + getBufferedWriter(File file, boolean append) : BufferedWriter
+        + getLines(String fileName) : Stream<String>
+        + getLines(File file) : Stream<String>
+        + toString() : String
+    }
+
+    class ResourceLoader {
+        - {static} DIR : String
+        __Constructor__
+        - ResourceLoader()
+        __Method__
+        + {static} get() : FileLoader
+    }
+
+    class FileSorter {
+        - loader : FileLoader
+        __Constructors__
+        + FileSorter() : FileSorter
+        + FileSorter(String dir) : FileSorter
+        + FileSorter(File dir) : FileSorter
+        + FileSorter(FileLoader) : FileSorter
+        __Accessors/Mutators__
+        + getLoader() : FileLoader
+        + getSearchDir() : File
+        __Methods__
+        + sortByLines(String fileName) : void
+        + sortByLines(File file) : void
+        + sortByLines(String inFileName, String outFileName) : void
+        + sortByLines(File inFile, File outFile) : void
+        - sortByLines(String<Stream> in, File outFile) : void
+        + getLinesSorted(String fileName) : Stream<String>
+        + getLinesSorted(File file) : Stream<String>
+    }
+
+    class ConsoleDataReader {
+        - in : Scanner
+        __Methods__
+        + readString(String prompt) : String
+        + readInt(String prompt) : int
+        + readIntValidated(String prompt) : int
+        + readIntValidated(String prompt, String errorMessage) : int
+        + readDouble(String prompt) : double
+        + readDoubleValidated(String prompt): double
+        + readDoubleValidated(String prompt, String errorMessage) : double
+        + readNDoubles(String prompt, int n) : double[]
+        + readNDoublesValidated(String prompt, int n) : double[]
+        + readNDoublesValidated(String prompt, String errorMessage, int n) : double[]
+        + readIntValidatedWithCondition(String prompt, String errorMessage, IntPredicate condition) : int
+
+    }
+
+    FileLoader <.. ResourceLoader : "Factory for"
+    FileSorter *- FileLoader
+
+    note "Empty constructor uses\nSystem.getProperty(''user.dir'')" as emptyConstructorNote
+    emptyConstructorNote .. FileSorter
+    emptyConstructorNote .. FileLoader
+
+    note left of ResourceLoader::DIR
+        System.getProperty("user.dir") +
+        "/src/main/resources"
+    end note
+}
+@enduml
