@@ -1,0 +1,58 @@
+@startuml
+
+|#DDDDDD|Application|
+|#CCCCCC|EmployeeList|
+|#BBBBBB|Employee|
+|#AAAAAA|CsvParser|
+|#999999|FileLoader|
+|#888888|ResourceLoader|
+|Application|
+start
+|Application|
+:Initialize Application Object app;
+:Create CsvParser
+instance of app, csvParser;
+|ResourceLoader|
+:ResourceLoader.get() returns
+FileLoader Object for getting
+resource files;
+|CsvParser|
+:Creates CsvParser with
+created FileLoader;
+|Application|
+:app.employeeList
+.addEmployeeData(app
+.csvParser.parseFile(INFILE_NAME));
+|FileLoader|
+:Opens file and creates
+Stream<String> for the lines;
+|CsvParser|
+:Maps each String to a list,
+splitting at the comma
+Collects the list into a list;
+:Passes List<List<String>>
+to EmployeeList;
+|EmployeeList|
+while (List has List entries)
+    if (List.size()) then (!= 3)
+        #pink:Throw IllegalArgumentException;
+        stop
+    else (= 3)
+        |Employee|
+        :Instantiates new Employee;
+    endif
+end while
+|EmployeeList|
+:Add employees to
+the instances list;
+|Application|
+:System.out.println(app
+.employeeList.buildTable());
+|EmployeeList|
+:buildTableHeader();
+:Builds table, returns String;
+|Application|
+:Displays Table to Console;
+stop
+
+@enduml
