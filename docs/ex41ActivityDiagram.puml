@@ -1,0 +1,68 @@
+@startuml
+
+|#DDDDDD|Application|
+|#CCCCCC|NameSorter|
+|#BBBBBB|FileSorter|
+|#AAAAAA|FileLoader|
+|#888888|ResourceLoader|
+|Application|
+start
+|Application|
+:Initialize Application Object app;
+:Create NameSorter
+instance of app, sorter;
+|ResourceLoader|
+:ResourceLoader.get() returns
+FileLoader Object for getting
+resource files;
+|FileSorter|
+:Creates FileSorter with
+created FileLoader;
+|NameSorter|
+:Creates NameSorter with
+created FileSorter;
+|Application|
+:app.sorter.sortNames(INFILE_NAME, OUTFILE_NAME);
+|FileLoader|
+:Returns file refered
+to by INFILE_NAME as
+Stream of Strings;
+|FileSorter|
+:Returns lines of
+file sorted;
+|NameSorter|
+:Creates File object using
+OUTFILE_NAME;
+:Passes Stream of Strings
+and File object to
+implementation;
+:Passes Stream to buildOutput();
+:Stream is collected as a List();
+:Passes list.size() to
+buildOutputHeader;
+:Pass list.stream()
+to FileSorter;
+|FileSorter|
+:Returns Stream as Strings
+joined by platform-dependent
+line separator;
+|NameSorter|
+:Passes buildOutput back
+to sortNames()
+implementation;
+|FileLoader|
+:Loads BufferedWriter of
+output file;
+|NameSorter|
+:Writes the output
+to the output file;
+:Closes the file;
+|Application|
+if (Any errors thrown?) then (no)
+#palegreen:Print Operation succeeded;
+else (yes)
+#pink:Print Operation Failed;
+endif
+stop
+
+@enduml

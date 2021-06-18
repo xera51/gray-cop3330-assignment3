@@ -1,0 +1,106 @@
+@startuml
+
+package oop.exercises.ex41 #CCCCCC {
+    class Application {
+        - {static} INFILE_NAME : String
+        - {static} OUTFILE_NAME : String
+        - sorter : NameSorter
+
+        + {static} main(String[] args) : void
+    }
+
+    class NameSorter {
+        - sorter : FileSorter
+        __Constructors__
+        + NameSorter() : NameSorter
+        + NameSorter(String dir) : NameSorter
+        + NameSorter(File dir) : NameSorter
+        + NameSorter(FileLoader loader) : NameSorter
+        + NameSorter(FileSorter sorter) : NameSorter
+        __Accessor/Mutators__
+        + getSorter() : FileSorter
+        + getLoader() : FileLoader
+        + getSearchDir() : File
+        __Methods__
+        + sortNames(String inFile) : void
+        + sortNames(File file) : void
+        + sortNames(String inFile, String outFile) : void
+        + sortNames(File inFile, File outFile) : void
+        - sortNames(Stream<String> in, File outFile) : void
+        + buildOutput(Stream<String> lines) : String
+        - buildOutputHeader(int numLines) : String
+    }
+
+    Application *- NameSorter
+}
+
+package oop.exercises.util #DDDDDD {
+
+    class FileLoader {
+        - searchDir : File
+        __Constructors__
+        + FileLoader() : FileLoader
+        + FileLoader(String dir) : FileLoader
+        + FileLoader(File dir) : FileLoader
+        __Accessors/Mutators__
+        + getSearchDir() : File
+        __Methods__
+        + getFile(String fileName) : File
+        + getFile(File file) : File
+        + getPath(String fileName) : Path
+        + getPath(File file) : Path
+        + getBufferedReader(String fileName) : BufferedReader
+        + getBufferedReader(File file) : BufferedReader
+        + getBufferedWriter(String fileName) : BufferedWriter
+        + getBufferedWriter(File file) : BufferedWriter
+        + getBufferedWriter(String fileName, boolean append) : BufferedWriter
+        + getBufferedWriter(File file, boolean append) : BufferedWriter
+        + getLines(String fileName) : Stream<String>
+        + getLines(File file) : Stream<String>
+        + toString() : String
+    }
+
+    class ResourceLoader {
+        - {static} DIR : String
+        __Constructor__
+        - ResourceLoader()
+        __Method__
+        + {static} get() : FileLoader
+    }
+
+    class FileSorter {
+        - loader : FileLoader
+        __Constructors__
+        + FileSorter() : FileSorter
+        + FileSorter(String dir) : FileSorter
+        + FileSorter(File dir) : FileSorter
+        + FileSorter(FileLoader) : FileSorter
+        __Accessors/Mutators__
+        + getLoader() : FileLoader
+        + getSearchDir() : File
+        __Methods__
+        + sortByLines(String fileName) : void
+        + sortByLines(File file) : void
+        + sortByLines(String inFileName, String outFileName) : void
+        + sortByLines(File inFile, File outFile) : void
+        - sortByLines(String<Stream> in, File outFile) : void
+        + getLinesSorted(String fileName) : Stream<String>
+        + getLinesSorted(File file) : Stream<String>
+    }
+
+    FileLoader <.. ResourceLoader : "Factory for"
+    FileSorter *- FileLoader
+
+    note "Empty constructor uses\nSystem.getProperty(''user.dir'')" as emptyConstructorNote
+    emptyConstructorNote .. FileSorter
+    emptyConstructorNote .. FileLoader
+
+    note left of ResourceLoader::DIR
+        System.getProperty("user.dir") +
+        "/src/main/resources"
+    end note
+}
+
+NameSorter *--- FileSorter
+
+@enduml
