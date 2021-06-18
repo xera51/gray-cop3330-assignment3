@@ -88,10 +88,10 @@ package oop.exercises.util #DDDDDD {
         + getLinesSorted(File file) : Stream<String>
     }
 
-    FileLoader <.. ResourceLoader : "Factory for"
+    FileLoader <.. ResourceLoader : "Creates"
     FileSorter *- FileLoader
 
-    note "Empty constructor uses\nSystem.getProperty(''user.dir'')" as emptyConstructorNote
+    note "No-args constructor uses\nSystem.getProperty(''user.dir'')" as emptyConstructorNote
     emptyConstructorNote .. FileSorter
     emptyConstructorNote .. FileLoader
 
