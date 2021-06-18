@@ -1,3 +1,8 @@
+/*
+ *  UCF COP3330 Summer 2021 Assignment 3 Solution
+ *  Copyright 2021 Christopher Gray
+ */
+
 package oop.exercises.util;
 
 import java.io.BufferedWriter;
@@ -87,7 +92,7 @@ public class FileSorter {
      */
     public void sortByLines(String fileName)
             throws IOException {
-        sortByLines(getLinesSorted(fileName), loader.getBufferedWriter(fileName));
+        sortByLines(getLinesSorted(fileName), new File(fileName));
     }
 
     /**
@@ -98,7 +103,7 @@ public class FileSorter {
      */
     public void sortByLines(File file)
             throws IOException{
-        sortByLines(getLinesSorted(file), loader.getBufferedWriter(file));
+        sortByLines(getLinesSorted(file), file);
     }
 
     /**
@@ -112,7 +117,7 @@ public class FileSorter {
      */
     public void sortByLines(String inFileName, String outFileName)
             throws IOException {
-        sortByLines(getLinesSorted(inFileName), loader.getBufferedWriter(outFileName));
+        sortByLines(getLinesSorted(inFileName), new File(outFileName));
     }
 
     /**
@@ -126,14 +131,14 @@ public class FileSorter {
      */
     public void sortByLines(File inFile, File outFile)
             throws IOException {
-        sortByLines(getLinesSorted(inFile), loader.getBufferedWriter(outFile));
+        sortByLines(getLinesSorted(inFile), outFile);
     }
 
     /**
      * Implementation of {@code sortByLines}
      *
      * @param in file to read from
-     * @param out file to write to
+     * @param outFile file to write to
      * @throws IOException if a file could not be found or created
      *
      * @see #sortByLines(String)
@@ -141,9 +146,11 @@ public class FileSorter {
      * @see #sortByLines(String, String)
      * @see #sortByLines(File, File)
      */
-    private void sortByLines(Stream<String> in, BufferedWriter out)
+    private void sortByLines(Stream<String> in, File outFile)
             throws IOException{
-        out.write(linesToString(in));
+        String output = linesToString(in);
+        BufferedWriter out = loader.getBufferedWriter(outFile);
+        out.write(output);
         out.close();
     }
 

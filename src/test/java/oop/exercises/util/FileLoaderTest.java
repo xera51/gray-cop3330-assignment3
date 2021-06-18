@@ -1,3 +1,8 @@
+/*
+ *  UCF COP3330 Summer 2021 Assignment 3 Solution
+ *  Copyright 2021 Christopher Gray
+ */
+
 package oop.exercises.util;
 
 import org.junit.jupiter.api.DisplayName;
@@ -8,6 +13,8 @@ import java.io.IOException;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+//TODO clean up, using @Before, maybe param testing
 
 class FileLoaderTest {
 

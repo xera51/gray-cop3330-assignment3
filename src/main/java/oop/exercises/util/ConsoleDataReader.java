@@ -2,17 +2,18 @@
  *  UCF COP3330 Summer 2021 Assignment 3 Solution
  *  Copyright 2021 Christopher Gray
  */
+
 package oop.exercises.util;
 
 import java.util.Scanner;
 import java.util.function.IntPredicate;
 import java.util.stream.IntStream;
 
-public class DataReader {
+public class ConsoleDataReader {
 
     private final Scanner in = new Scanner(System.in);
 
-    public DataReader() { }
+    public ConsoleDataReader() { }
 
     /**
      * Prompts the user for an input, and returns the line they typed
@@ -34,6 +35,15 @@ public class DataReader {
     public int readInt(String prompt) {
         System.out.print(prompt);
         return in.nextInt();
+    }
+
+    /**
+     * {@code errorMessage} defaults to the empty {@code String}
+     *
+     * @see #readIntValidated(String, String)
+     */
+    public int readIntValidated(String prompt) {
+        return readIntValidated(prompt, "");
     }
 
     /**
@@ -68,15 +78,6 @@ public class DataReader {
     }
 
     /**
-     * {@code errorMessage} defaults to the empty {@code String}
-     *
-     * @see #readIntValidated(String, String)
-     */
-    public int readIntValidated(String prompt) {
-        return readIntValidated(prompt, "");
-    }
-
-    /**
      * Prompts the user for an input, and returns the line they typed
      * into the console as a {@code double}
      * @param prompt {@code String} to be displayed as a prompt for the user
@@ -85,6 +86,15 @@ public class DataReader {
     public double readDouble(String prompt) {
         System.out.print(prompt);
         return in.nextDouble();
+    }
+
+    /**
+     * {@code errorMessage} defaults to the empty {@code String}
+     *
+     * @see #readDoubleValidated(String, String)
+     */
+    public double readDoubleValidated(String prompt) {
+        return readDoubleValidated(prompt, "");
     }
 
     /**
@@ -119,15 +129,6 @@ public class DataReader {
     }
 
     /**
-     * {@code errorMessage} defaults to the empty {@code String}
-     *
-     * @see #readDoubleValidated(String, String)
-     */
-    public double readDoubleValidated(String prompt) {
-        return readDoubleValidated(prompt, "");
-    }
-
-    /**
      * Prompts the user for an input n times, and returns the inputs they typed
      * into the console as a {@code Array} of {@code double}s
      *
@@ -142,6 +143,15 @@ public class DataReader {
             output[i] = readDouble(prompt);
         }
         return output;
+    }
+
+    /**
+     * {@code errorMessage} defaults to the empty {@code String}
+     *
+     * @see #readNDoublesValidated(String, String, int)
+     */
+    public double[] readNDoublesValidated(String prompt, int n) {
+        return readNDoublesValidated(prompt, "", n);
     }
 
     /**
@@ -163,15 +173,6 @@ public class DataReader {
             output[i] = readDoubleValidated(prompt, errorMessage);
         }
         return output;
-    }
-
-    /**
-     * {@code errorMessage} defaults to the empty {@code String}
-     *
-     * @see #readNDoublesValidated(String, String, int)
-     */
-    public double[] readNDoublesValidated(String prompt, int n) {
-        return readNDoublesValidated(prompt, "", n);
     }
 
 
