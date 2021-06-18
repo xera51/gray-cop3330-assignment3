@@ -71,12 +71,30 @@ package oop.exercises.util #DDDDDD {
 
     }
 
-    FileLoader <.. ResourceLoader : "Factory for"
-    FileSorter *- FileLoader
+      class CsvParser {
+            - loader : FileLoader
+            __Constructors__
+            + CsvParser() : CsvParser
+            + CsvParser(String dir) : CsvParser
+            + CsvParser(File dir) : CsvParser
+            + CsvParser(FileLoader loader) : CsvParser
+            __Accessors/Mutators__
+            + getLoader() : FileLoader
+            + getSearchDir() : File
+            __Methods__
+            + parseFile(String fileName) : List<List<String>>
+            + parseFile(File file) : List<List<String>>
+        }
 
-    note "Empty constructor uses\nSystem.getProperty(''user.dir'')" as emptyConstructorNote
+    FileLoader <.. ResourceLoader : "Creates"
+    FileSorter *- FileLoader
+    CsvParser *-- FileLoader
+
+    note "No-args constructor uses\nSystem.getProperty(''user.dir'')" as emptyConstructorNote
+    CsvParser .. emptyConstructorNote
     emptyConstructorNote .. FileSorter
     emptyConstructorNote .. FileLoader
+
 
     note left of ResourceLoader::DIR
         System.getProperty("user.dir") +
