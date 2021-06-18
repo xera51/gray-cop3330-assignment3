@@ -1,9 +1,20 @@
 package oop.exercises.util;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.stream.Stream;
 
+/**
+ * Used for loading various objects, such as {@code File}s, {@code Path}s,
+ * {@code BufferedReader}s and {@code BufferedWriter}s from a given search directory
+ */
 public class FileLoader {
 
+    /**
+     * The directory that will be used to search for the files passed in to
+     * the various methods in this class
+     */
     private final File searchDir;
 
     /**
@@ -69,6 +80,28 @@ public class FileLoader {
      */
     public File getFile(File file) {
         return new File(searchDir, file.toString());
+    }
+
+    /**
+     * Creates a {@code Path} using {@code FileLoader}s {@code searchDir} as
+     * the parent and {@code String fileName} as the child
+     *
+     * @param fileName the name of the file
+     * @return the file as a {@code Path}
+     */
+    public Path getPath(String fileName) {
+        return getFile(fileName).toPath();
+    }
+
+    /**
+     * Creates a {@code Path} using {@code FileLoader}s {@code searchDir} as
+     * the parent and {@code File file} as the child
+     *
+     * @param file the path of the file
+     * @return the file as a {@code Path}
+     */
+    public Path getPath(File file) {
+        return getFile(file).toPath();
     }
 
     /**
@@ -149,5 +182,41 @@ public class FileLoader {
     public BufferedWriter getBufferedWriter(File file, boolean append)
             throws IOException {
         return new BufferedWriter(new FileWriter(getFile(file), append));
+    }
+
+    /**
+     * Creates a {@code Stream<String>} of lines of the file returned from {@code getPath}
+     *
+     * @param fileName the name of the file
+     * @return {@code Stream<String>} containing the lines in the file
+     * @throws IOException if the file does not exist
+     * @see #getPath(String)
+     */
+    public Stream<String> getLines(String fileName)
+            throws IOException{
+        return Files.lines(getPath(fileName));
+    }
+
+    /**
+     * Creates a {@code Stream<String>} of lines of the file returned from {@code getPath}
+     *
+     * @param file - the path of the file
+     * @return {@code Stream<String>} containing the lines in the file
+     * @throws IOException if the file does not exist
+     * @see #getPath(File)
+     */
+    public Stream<String> getLines(File file)
+            throws IOException{
+        return Files.lines(getPath(file));
+    }
+
+    /**
+     * Override for {@code Object toString()}
+     *
+     * @return A string representation of {@code FileLoader}
+     */
+    @Override
+    public String toString() {
+        return String.format("FileLoader searching from: %s", getSearchDir());
     }
 }

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -113,5 +114,45 @@ class FileLoaderTest {
         File searchFile = new File("exercise41_output.txt");
 
         assertDoesNotThrow(() -> resourceLoader.getBufferedWriter(searchFile, true));
+    }
+
+    @Test
+    @DisplayName("Gets the lines of a file using String")
+    void file_loader_successfully_gets_the_lines_from_a_file_using_string()
+            throws IOException{
+        FileLoader loader = ResourceLoader.get();
+
+        String expected = String.format("Ling, Mai%n" +
+                "Johnson, Jim%n" +
+                "Zarnecki, Sabrina%n" +
+                "Jones, Chris%n" +
+                "Jones, Aaron%n" +
+                "Swift, Geoffrey%n" +
+                "Xiong, Fong");
+        String actual = loader.getLines("exercise41_input.txt")
+                .collect(Collectors.joining(System.lineSeparator()));
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("Gets the lines of a file using File")
+    void file_loader_successfully_gets_the_lines_from_a_file_using_file()
+            throws IOException{
+        FileLoader loader = ResourceLoader.get();
+        File searchFile = new File("exercise41_input.txt");
+
+        String expected = String.format("Ling, Mai%n" +
+                "Johnson, Jim%n" +
+                "Zarnecki, Sabrina%n" +
+                "Jones, Chris%n" +
+                "Jones, Aaron%n" +
+                "Swift, Geoffrey%n" +
+                "Xiong, Fong");
+
+        String actual = loader.getLines(searchFile)
+                .collect(Collectors.joining(System.lineSeparator()));
+
+        assertEquals(expected, actual);
     }
 }
