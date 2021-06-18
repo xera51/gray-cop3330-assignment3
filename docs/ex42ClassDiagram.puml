@@ -1,0 +1,98 @@
+@startuml
+
+package oop.exercises.ex42 #CCCCCC{
+    class Application {
+        - {static} INFILE_NAME : String
+        - employeeList : EmployeeList
+        - csvParser : CsvParser
+        __Methods__
+        + {static} main(String[] args): void
+    }
+
+
+    class Employee {
+        - data : HashMap<String, String>
+        __Constructors__
+        + Employee(String firstName,
+        String lastName, String Salary) : Employee
+        + Employee(String firstName,
+        String lastName, double Salary) : Employee
+        __Accessor/Mutators__
+        + getFirst() : String
+        + getLast() : String
+        + getFull() : String
+        + getSalary() : String
+        + setSalary() : String
+        __Validators__
+        - validateName(String name) : boolean
+        - validateSalary(double salary) : boolean
+    }
+
+    class EmployeeList {
+        - employees : List<Employee>
+        __Constructors__
+        + EmployeeList() : EmployeeList
+        + EmployeeList(List<Employee> employees) : EmployeeList
+        __Accessors/Mutators__
+        + getList() : List<Employee>
+        + setList(List<Employee> employees) : void
+        + addEmployee(Employee newEmployee) : void
+        + addEmployeeData(List<List<String>>) : void
+        __Methods__
+        + buildTable() : String
+        - buildTableHeader() : String
+    }
+
+    Application *- EmployeeList
+    EmployeeList *- Employee : "Contains List of"
+}
+
+package oop.exercises.util #DDDDDD{
+
+    class CsvParser {
+        - loader : FileLoader
+        __Constructors__
+        + CsvParser() : CsvParser
+        + CsvParser(String dir) : CsvParser
+        + CsvParser(File dir) : CsvParser
+        + CsvParser(FileLoader loader) : CsvParser
+        __Accessors/Mutators__
+        + getLoader() : FileLoader
+        + getSearchDir() : File
+        __Methods__
+        + parseFile(String fileName) : List<List<String>>
+        + parseFile(File file) : List<List<String>>
+    }
+
+    class FileLoader {
+        - searchDir : File
+        __Constructors__
+        + FileLoader() : FileLoader
+        + FileLoader(String dir) : FileLoader
+        + FileLoader(File dir) : FileLoader
+        __Accessors/Mutators__
+        + getSearchDir() : File
+        __Methods__
+        + getFile(String fileName) : File
+        + getFile(File file) : File
+        + getPath(String fileName) : Path
+        + getPath(File file) : Path
+        + getBufferedReader(String fileName) : BufferedReader
+        + getBufferedReader(File file) : BufferedReader
+        + getBufferedWriter(String fileName) : BufferedWriter
+        + getBufferedWriter(File file) : BufferedWriter
+        + getBufferedWriter(String fileName, boolean append) : BufferedWriter
+        + getBufferedWriter(File file, boolean append) : BufferedWriter
+        + getLines(String fileName) : Stream<String>
+        + getLines(File file) : Stream<String>
+        + toString() : String
+    }
+
+    note "No-args constructor uses\nSystem.getProperty(''user.dir'')" as emptyConstructorNote
+    CsvParser .. emptyConstructorNote
+    FileLoader .. emptyConstructorNote
+
+    Application *-- CsvParser
+    CsvParser *- FileLoader
+}
+@enduml
