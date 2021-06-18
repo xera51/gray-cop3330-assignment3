@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 public class Employee {
 
-    private final HashMap<String, String> data = new HashMap<>();
+    private final HashMap<String, String> data = new HashMap<>(3);
 
     public Employee(String firstName, String lastName, String salary) {
         this(firstName, lastName, Double.parseDouble(salary));
