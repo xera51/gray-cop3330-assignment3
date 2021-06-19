@@ -68,7 +68,6 @@ package oop.exercises.util #DDDDDD {
         + readNDoublesValidated(String prompt, int n) : double[]
         + readNDoublesValidated(String prompt, String errorMessage, int n) : double[]
         + readIntValidatedWithCondition(String prompt, String errorMessage, IntPredicate condition) : int
-
     }
 
       class CsvParser {
