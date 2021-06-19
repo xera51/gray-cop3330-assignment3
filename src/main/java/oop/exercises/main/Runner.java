@@ -21,6 +21,10 @@ public class Runner {
 
     public static void main(String[] args) {
         Runner runner = new Runner();
+        System.out.printf("NOTE: Output files may not appear in the " +
+                "file viewer until termination of program%n" +
+                "Please terminate the program if they do not " +
+                "appear and you want to see them%n");
         do {
             int exerciseNumber = runner.readExercise();
             runner.exerciseRunner(exerciseNumber);
