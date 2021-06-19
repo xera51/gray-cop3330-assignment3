@@ -5,6 +5,7 @@
 
 package oop.exercises.ex41;
 
+import oop.exercises.util.FileLoader;
 import oop.exercises.util.FileSorter;
 import oop.exercises.util.ResourceLoader;
 import org.junit.jupiter.api.DisplayName;
@@ -84,12 +85,12 @@ class NameSorterTest {
         sorter.sortNames(test_filename_in);
 
         String expected = test_output;
-        String actual = ResourceLoader.get()
+        String actual = new FileLoader()
                 .getLines(test_filename_in)
                 .collect(Collectors.joining(System.lineSeparator()));
         assertEquals(expected, actual);
 
-        ResourceLoader.get().getFile(test_filename_in).delete();
+        new FileLoader().getFile(test_filename_in).delete();
     }
 
     @Test
@@ -105,12 +106,12 @@ class NameSorterTest {
         sorter.sortNames(new File(test_filename_in));
 
         String expected = test_output;
-        String actual = ResourceLoader.get()
+        String actual = new FileLoader()
                 .getLines(test_filename_in)
                 .collect(Collectors.joining(System.lineSeparator()));
         assertEquals(expected, actual);
 
-        ResourceLoader.get().getFile(test_filename_in).delete();
+        new FileLoader().getFile(test_filename_in).delete();
     }
 
     @Test
@@ -126,13 +127,13 @@ class NameSorterTest {
         sorter.sortNames(test_filename_in, test_filename_out);
 
         String expected = test_output;
-        String actual = ResourceLoader.get()
+        String actual = new FileLoader()
                 .getLines(test_filename_out)
                 .collect(Collectors.joining(System.lineSeparator()));
         assertEquals(expected, actual);
 
         ResourceLoader.get().getFile(test_filename_in).delete();
-        ResourceLoader.get().getFile(test_filename_out).delete();
+        new FileLoader().getFile(test_filename_out).delete();
     }
 
     @Test
@@ -148,13 +149,13 @@ class NameSorterTest {
         sorter.sortNames(new File(test_filename_in), new File(test_filename_out));
 
         String expected = test_output;
-        String actual = ResourceLoader.get()
+        String actual = new FileLoader()
                 .getLines(test_filename_out)
                 .collect(Collectors.joining(System.lineSeparator()));
         assertEquals(expected, actual);
 
         ResourceLoader.get().getFile(test_filename_in).delete();
-        ResourceLoader.get().getFile(test_filename_out).delete();
+        new FileLoader().getFile(test_filename_out).delete();
     }
 
     @Test

@@ -5,6 +5,7 @@
 
 package oop.exercises.ex45;
 
+import oop.exercises.util.FileLoader;
 import oop.exercises.util.ResourceLoader;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -67,12 +68,13 @@ class FileStringReplacerTest {
         replacer.swapStringInFile(INFILE_NAME, FROM, TO);
 
         String expected = OUTPUT_STRING;
-        String actual = replacer.getLoader().getLines(INFILE_NAME)
+        String actual = new FileLoader()
+                .getLines(INFILE_NAME)
                 .collect(Collectors.joining(System.lineSeparator()));
 
         assertEquals(expected, actual);
 
-        replacer.getLoader().getFile(INFILE_NAME).delete();
+        new FileLoader().getFile(INFILE_NAME).delete();
     }
 
     @Test
@@ -87,12 +89,13 @@ class FileStringReplacerTest {
         replacer.swapStringInFile(new File(INFILE_NAME), FROM, TO);
 
         String expected = OUTPUT_STRING;
-        String actual = replacer.getLoader().getLines(INFILE_NAME)
+        String actual = new FileLoader()
+                .getLines(INFILE_NAME)
                 .collect(Collectors.joining(System.lineSeparator()));
 
         assertEquals(expected, actual);
 
-        replacer.getLoader().getFile(INFILE_NAME).delete();
+        new FileLoader().getFile(INFILE_NAME).delete();
     }
 
     @Test
@@ -107,13 +110,14 @@ class FileStringReplacerTest {
         replacer.swapStringInFile(INFILE_NAME, OUTFILE_NAME, FROM, TO);
 
         String expected = OUTPUT_STRING;
-        String actual = replacer.getLoader().getLines(OUTFILE_NAME)
+        String actual = new FileLoader()
+                .getLines(OUTFILE_NAME)
                 .collect(Collectors.joining(System.lineSeparator()));
 
         assertEquals(expected, actual);
 
         replacer.getLoader().getFile(INFILE_NAME).delete();
-        replacer.getLoader().getFile(OUTFILE_NAME).delete();
+        new FileLoader().getFile(OUTFILE_NAME).delete();
     }
 
     @Test
@@ -129,13 +133,14 @@ class FileStringReplacerTest {
                 new File(OUTFILE_NAME), FROM, TO);
 
         String expected = OUTPUT_STRING;
-        String actual = replacer.getLoader().getLines(OUTFILE_NAME)
+        String actual = new FileLoader()
+                .getLines(OUTFILE_NAME)
                 .collect(Collectors.joining(System.lineSeparator()));
 
         assertEquals(expected, actual);
 
         replacer.getLoader().getFile(INFILE_NAME).delete();
-        replacer.getLoader().getFile(OUTFILE_NAME).delete();
+        new FileLoader().getFile(OUTFILE_NAME).delete();
     }
 
     @Test

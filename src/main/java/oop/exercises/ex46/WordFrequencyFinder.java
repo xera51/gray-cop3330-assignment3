@@ -98,9 +98,9 @@ public class WordFrequencyFinder {
 
         for(Map.Entry<String, Long> e : words.entrySet()) {
             output.append(
-                    String.format("%" + width + "s", e.getKey() + ":"));
-            output.append("*".repeat(e.getValue().intValue()));
-            output.append(System.lineSeparator());
+                    String.format("%" + width + "s", e.getKey() + ":") +
+                            "*".repeat(e.getValue().intValue()) +
+                            System.lineSeparator());
         }
         return output.toString();
     }
