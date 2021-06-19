@@ -1,0 +1,38 @@
+@startuml
+
+|#DDD|Application|
+|#BBB|WordFrequencyFinder|
+|#999999|FileLoader|
+|#777777|ResourceLoader|
+|Application|
+start
+:Instantiate Application
+object app;
+|ResourceLoader|
+:Create FileLoader;
+|Application|
+:Instantiate
+WordFrequencyFinder
+freqFinder;
+:app.freqFinder
+.getWordFrequencyGraphSorted(INFILE_NAME);
+|FileLoader|
+:load input into
+Stream<String>;
+|WordFrequencyFinder|
+:Call getWordFrequencySorted();
+:Call getWordFrequency();
+:Return Map with keys being
+words and values being count;
+:Return Map sorted by
+values decreasing;
+:Transform Map into a String;
+|Application|
+if (Exception thrown) then (no)
+    #palegreen:Print graph;
+else (yes)
+    #pink:Print Operation Failed;
+endif
+stop
+
+@enduml

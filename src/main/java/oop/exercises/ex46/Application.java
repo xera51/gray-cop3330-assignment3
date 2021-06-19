@@ -5,9 +5,22 @@
 
 package oop.exercises.ex46;
 
+import oop.exercises.util.ResourceLoader;
+
+import java.io.IOException;
+
 public class Application {
 
+    private static final String INFILE_NAME = "exercise46_input.txt";
+    private final WordFrequencyFinder freqFinder = new WordFrequencyFinder(ResourceLoader.get());
+
     public static void main(String[] args) {
-        System.out.println("Exercise 46!");
+        Application app = new Application();
+        try {
+            String output = app.freqFinder.getWordFrequencyGraphSorted(INFILE_NAME);
+            System.out.print(output);
+        } catch (IOException e) {
+            System.out.println("Operation Failed");
+        }
     }
 }
