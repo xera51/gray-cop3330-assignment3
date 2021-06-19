@@ -90,6 +90,7 @@ class NameSorterTest {
                 .collect(Collectors.joining(System.lineSeparator()));
         assertEquals(expected, actual);
 
+        ResourceLoader.get().getFile(test_filename_in).delete();
         new FileLoader().getFile(test_filename_in).delete();
     }
 
@@ -111,6 +112,7 @@ class NameSorterTest {
                 .collect(Collectors.joining(System.lineSeparator()));
         assertEquals(expected, actual);
 
+        ResourceLoader.get().getFile(test_filename_in).delete();
         new FileLoader().getFile(test_filename_in).delete();
     }
 

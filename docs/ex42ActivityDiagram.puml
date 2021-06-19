@@ -1,9 +1,9 @@
 @startuml
 
-|#DDDDDD|Application|
-|#CCCCCC|EmployeeList|
-|#BBBBBB|Employee|
-|#AAAAAA|CsvParser|
+|#DDD|Application|
+|#CCC|EmployeeList|
+|#BBB|Employee|
+|#AAA|CsvParser|
 |#999999|FileLoader|
 |#888888|ResourceLoader|
 |Application|
