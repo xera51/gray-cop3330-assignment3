@@ -61,7 +61,7 @@ package oop.exercises.util #DDDDDD{
         + getLines(String fileName) : Stream<String>
         + getLines(File file) : Stream<String>
         + toString() : String
-    }
+   }
 
     class ResourceLoader {
         - {static} DIR : String
@@ -71,7 +71,7 @@ package oop.exercises.util #DDDDDD{
         + {static} get() : FileLoader
     }
 
-   class ConsoleDataReader {
+    class ConsoleDataReader {
         - in : Scanner
         __Methods__
         + readString(String prompt) : String
@@ -95,4 +95,5 @@ package oop.exercises.util #DDDDDD{
     Application *-- ConsoleDataReader
     FileStringReplacer *- FileLoader
 }
+
 @enduml
