@@ -1,0 +1,50 @@
+@startuml
+
+|#DDD|Application|
+|#BBB|FileStringReplacer|
+|#999999|FileLoader|
+|#777777|ResourceLoader|
+|#555555|ConsoleDateReader|
+|Application|
+start
+:Instantiate Application
+object app;
+|ResourceLoader|
+:Create FileLoader;
+|Application|
+:Instantiate
+FileStringReplacer replacer;
+|ConsoleDateReader|
+:Read user input
+Return String;
+|Application|
+:Save user input
+to outFileName;
+:app.replacer.swapStringInFile(
+INFILE_NAME, outFileName, FROM, TO);;
+|FileLoader|
+:load input into
+Stream<String>;
+|FileStringReplacer|
+:Pass to implementation
+method;
+:Pass input to swapString()
+which does the replacement;
+:Pass stream to linesToString()
+returning a String;
+|FileLoader|
+:create BufferedWriter
+using output file location;
+|FileStringReplacer|
+:write output String
+to output file;
+:close file;
+|Application|
+if (Exception thrown) then (no)
+    #palegreen:Print Operation Succeeded;
+else (yes)
+    #pink:Print Operation Failed;
+endif
+stop
+
+@enduml

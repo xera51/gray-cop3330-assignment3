@@ -1,0 +1,98 @@
+@startuml
+
+package oop.exercises.ex45 #CCCCCC{
+    class Application {
+        - {static} INFILE_NAME : String
+        - {static} FROM : String
+        - {static} TO : String
+        - {static} reader : ConsoleDataReader
+        - replacer : FileStringReplacer
+
+        + {static} main(String[] args) : void
+        - readFileName() : String
+    }
+
+    class FileStringReplacer {
+        - loader : FileLoader
+        __Constructors__
+        + FileStringReplacer() : FileStringReplacer
+        + FileStringReplacer(String dir) : FileStringReplacer
+        + FileStringReplacer(File dir) : FileStringReplacer
+        + FileStringReplacer(FileLoader loader) : FileStringReplacer
+        __Accessors/Mutators__
+        + getLoader() : FileLoader
+        + getSearchDir() : File
+        __Methods__
+        + swapStringInFile(String fileName, String from, String to) : void
+        + swapStringInFile(File file, String from, String to) : void
+        + swapStringInFile(String inFileName, String outFileName, String from, String to) : void
+        + swapStringInFile(File inFile, File outFile, String from, String to) : void
+        - swapStringInFile(Stream<String> in, File outFile, String from, String to) : void
+        + swapString(Stream<String>, String from, String to) : Stream<String>
+        - linesToString(Stream<String>) : String
+    }
+
+    note "No-args constructor uses\nSystem.getProperty(''user.dir'')" as emptyConstructorNoteEx45
+    FileStringReplacer . emptyConstructorNoteEx45
+
+    Application *- FileStringReplacer
+}
+
+package oop.exercises.util #DDDDDD{
+    class FileLoader {
+        - searchDir : File
+        __Constructors__
+        + FileLoader() : FileLoader
+        + FileLoader(String dir) : FileLoader
+        + FileLoader(File dir) : FileLoader
+        __Accessors/Mutators__
+        + getSearchDir() : File
+        __Methods__
+        + getFile(String fileName) : File
+        + getFile(File file) : File
+        + getPath(String fileName) : Path
+        + getPath(File file) : Path
+        + getBufferedReader(String fileName) : BufferedReader
+        + getBufferedReader(File file) : BufferedReader
+        + getBufferedWriter(String fileName) : BufferedWriter
+        + getBufferedWriter(File file) : BufferedWriter
+        + getBufferedWriter(String fileName, boolean append) : BufferedWriter
+        + getBufferedWriter(File file, boolean append) : BufferedWriter
+        + getLines(String fileName) : Stream<String>
+        + getLines(File file) : Stream<String>
+        + toString() : String
+    }
+
+    class ResourceLoader {
+        - {static} DIR : String
+        __Constructor__
+        - ResourceLoader()
+        __Method__
+        + {static} get() : FileLoader
+    }
+
+   class ConsoleDataReader {
+        - in : Scanner
+        __Methods__
+        + readString(String prompt) : String
+        + readInt(String prompt) : int
+        + readIntValidated(String prompt) : int
+        + readIntValidated(String prompt, String errorMessage) : int
+        + readDouble(String prompt) : double
+        + readDoubleValidated(String prompt): double
+        + readDoubleValidated(String prompt, String errorMessage) : double
+        + readNDoubles(String prompt, int n) : double[]
+        + readNDoublesValidated(String prompt, int n) : double[]
+        + readNDoublesValidated(String prompt, String errorMessage, int n) : double[]
+        + readIntValidatedWithCondition(String prompt, String errorMessage, IntPredicate condition) : int
+    }
+
+    FileLoader <.. ResourceLoader : "Creates"
+
+    note "No-args constructor uses\nSystem.getProperty(''user.dir'')" as emptyConstructorNote
+    FileLoader .. emptyConstructorNote
+
+    Application *-- ConsoleDataReader
+    FileStringReplacer *- FileLoader
+}
+@enduml
