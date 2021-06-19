@@ -79,7 +79,7 @@ public class NameSorter {
     }
 
     public String buildOutput(Stream<String> lines) {
-        List linesList = lines.collect(Collectors.toList());
+        List<String> linesList = lines.collect(Collectors.toList());
         return buildOutputHeader(linesList.size()) + sorter.linesToString(linesList.stream());
     }
 

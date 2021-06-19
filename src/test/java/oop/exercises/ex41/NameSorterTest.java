@@ -17,8 +17,6 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//TODO clean up, using @Before, maybe param testing
-
 class NameSorterTest {
 
     private static final String test_filename_in = "file_for_testing_in.txt";

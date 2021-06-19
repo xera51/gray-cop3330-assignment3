@@ -14,8 +14,6 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//TODO clean up, using @Before, maybe param testing
-
 class FileLoaderTest {
 
     private static final String ud = System.getProperty("user.dir");
