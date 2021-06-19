@@ -11,6 +11,7 @@ package oop.exercises.ex41 #CCCCCC {
 
     class NameSorter {
         - sorter : FileSorter
+        - {static} output_loader : FileLoader()
         __Constructors__
         + NameSorter() : NameSorter
         + NameSorter(String dir) : NameSorter

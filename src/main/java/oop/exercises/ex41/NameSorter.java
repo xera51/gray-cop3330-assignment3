@@ -18,6 +18,7 @@ import java.util.stream.Stream;
 public class NameSorter {
 
     private final FileSorter sorter;
+    private static final FileLoader output_loader = new FileLoader();
 
     public NameSorter() {
         this(System.getProperty("user.dir"));
@@ -73,7 +74,7 @@ public class NameSorter {
     private void sortNames(Stream<String> in, File outFile)
             throws IOException {
         String output = buildOutput(in);
-        BufferedWriter out = getLoader().getBufferedWriter(outFile);
+        BufferedWriter out = output_loader.getBufferedWriter(outFile);
         out.write(output);
         out.close();
     }

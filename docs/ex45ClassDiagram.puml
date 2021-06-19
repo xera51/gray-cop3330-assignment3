@@ -14,6 +14,7 @@ package oop.exercises.ex45 #CCCCCC{
 
     class FileStringReplacer {
         - loader : FileLoader
+        - {static} output_loader : FileLoader()
         __Constructors__
         + FileStringReplacer() : FileStringReplacer
         + FileStringReplacer(String dir) : FileStringReplacer

@@ -16,6 +16,7 @@ import java.util.stream.Stream;
 public class FileStringReplacer {
 
     private final FileLoader loader;
+    private static final FileLoader output_loader = new FileLoader();
 
     public FileStringReplacer() {
        this(System.getProperty("user.dir"));
@@ -66,7 +67,7 @@ public class FileStringReplacer {
     private void swapStringInFile(Stream<String> in, File outFile, String from, String to)
             throws IOException {
         String output = linesToString(swapString(in, from, to));
-        BufferedWriter out = loader.getBufferedWriter(outFile);
+        BufferedWriter out = output_loader.getBufferedWriter(outFile);
         out.write(output);
         out.close();
     }
