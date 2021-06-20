@@ -1,0 +1,127 @@
+@startuml
+
+package oop.exercises.ex44#DDD {
+
+    class Application {
+        - {static} INFILE_NAME : String
+        - {static} loader : FileLoader
+        - productList : ProductList
+        __Methods__
+        + {static} main(String[] args) : void
+        - createProductListFromJson() : void
+    }
+
+    class ProductList {
+        - {static} reader : ConsoleDataReader
+        - products : List<Product>
+        __Constructors__
+        + ProductList() : ProductList
+        + ProductList(List<Product>) : ProductList
+        __Accessors/Mutators__
+        + getProducts() : List<Product>
+        + setProducts(List<Product>) : void
+        + getProduct(String productName) : Product
+        + addProduct(String name, double price, int quantity) : void
+        + addProduct(Product product) : void
+        + removeProduct(String productName) : void
+        __Methods__
+        + searchForProduct() : Product
+        + searchForProductUntilFound() : Product
+    }
+
+    class Product {
+        - name : String
+        - price : double
+        - quantity : int
+        __Constructors__
+        + Product(String name) : Product
+        + Product(String name, double price, int quantity) : Product
+        __Accessors/Mutators__
+        + getName() : String
+        + setName(String name) : void
+        + getPrice() : double
+        + setPrice(double price) : void
+        + getQuantity() : int
+        + setQuantity(int quantity) : void
+        __Methods__
+        + toString() : String
+    }
+
+    Application *- ProductList
+    ProductList *- Product
+}
+
+package com.google.gson#999 {
+
+    class Gson {
+        __Constructors__
+        + Gson() : Gson
+        __Methods__
+        + toJson(Object obj) : void
+        + fromJson(String json, Class class) : Object
+    }
+
+    Application *-- Gson
+}
+
+package oop.exercises.util#BBB {
+
+    class FileLoader {
+        - searchDir : File
+        __Constructors__
+        + FileLoader() : FileLoader
+        + FileLoader(String dir) : FileLoader
+        + FileLoader(File dir) : FileLoader
+        __Accessors/Mutators__
+        + getSearchDir() : File
+        __Methods__
+        + getFile(String fileName) : File
+        + getFile(File file) : File
+        + getPath(String fileName) : Path
+        + getPath(File file) : Path
+        + getBufferedReader(String fileName) : BufferedReader
+        + getBufferedReader(File file) : BufferedReader
+        + getBufferedWriter(String fileName) : BufferedWriter
+        + getBufferedWriter(File file) : BufferedWriter
+        + getBufferedWriter(String fileName, boolean append) : BufferedWriter
+        + getBufferedWriter(File file, boolean append) : BufferedWriter
+        + getLines(String fileName) : Stream<String>
+        + getLines(File file) : Stream<String>
+        + toString() : String
+    }
+
+    class ResourceLoader {
+        - {static} DIR : String
+        __Constructor__
+        - ResourceLoader()
+        __Method__
+        + {static} get() : FileLoader
+    }
+
+
+    class ConsoleDataReader {
+        - in : Scanner
+        __Methods__
+        + readString(String prompt) : String
+        + readInt(String prompt) : int
+        + readIntValidated(String prompt) : int
+        + readIntValidated(String prompt, String errorMessage) : int
+        + readDouble(String prompt) : double
+        + readDoubleValidated(String prompt): double
+        + readDoubleValidated(String prompt, String errorMessage) : double
+        + readNDoubles(String prompt, int n) : double[]
+        + readNDoublesValidated(String prompt, int n) : double[]
+        + readNDoublesValidated(String prompt, String errorMessage, int n) : double[]
+        + readIntValidatedWithCondition(String prompt, String errorMessage, IntPredicate condition) : int
+    }
+
+    FileLoader <.. ResourceLoader : "Creates"
+
+    note "No-args constructor uses\nSystem.getProperty(''user.dir'')" as emptyConstructorNote
+     FileLoader .. emptyConstructorNote
+
+    ProductList *-- ConsoleDataReader
+    Application *-- FileLoader
+}
+
+@enduml

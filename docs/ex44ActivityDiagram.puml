@@ -1,0 +1,54 @@
+@startuml
+
+|#EEE|Gson|
+|#DDD|Application|
+|#CCC|ProductList|
+|#BBB|Product|
+|#BBB|ConsoleDataReader|
+|#AAA|FileLoader|
+|#999|ResourceLoader|
+|Application|
+start
+:Initialize
+Application app;
+:Declare ProductList
+productList;
+:Get Type of collection;
+|ResourceLoader|
+:Create FileLoader;
+|FileLoader|
+:Load INFILE BufferedReader;
+|Application|
+if (IO Exception) then (no)
+
+else (yes)
+    #pink:Print Failed to load file;
+    stop
+endif
+:Pass Reader to Gson;
+|Gson|
+:Parse Json;
+|Product|
+:Initialize Products;
+|ProductList|
+:Initialize ProductList;
+|Application|
+:Product product = app.productList
+.searchForProductLoop();
+|ProductList|
+:In searchForProductLoop;
+repeat
+:call reader;
+|ConsoleDataReader|
+:Prompt for product name;
+|ProductList|
+:Find product;
+repeat while (Found?) is (no) not (yes)
+|Application|
+#palegreen:Print Product;
+|Product|
+:toString() implicit;
+|Application|
+stop
+
+@enduml
