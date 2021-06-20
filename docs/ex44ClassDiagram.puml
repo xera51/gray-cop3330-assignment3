@@ -45,6 +45,7 @@ package oop.exercises.ex44#DDD {
         + setQuantity(int quantity) : void
         __Methods__
         + toString() : String
+        + equals(Object obj) : boolean
     }
 
     Application *- ProductList

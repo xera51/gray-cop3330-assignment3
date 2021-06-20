@@ -42,15 +42,7 @@ class ProductListTest {
             }};
         List<Product> actual = productList.getProducts();
 
-        if(expected.size() != actual.size()) {
-            fail("different length lists");
-        }
-
-        for(int i = 0; i < expected.size(); i++) {
-            Product expectedProduct = expected.get(i);
-            Product actualProduct = actual.get(i);
-            assertEquals(expectedProduct.toString(), actualProduct.toString());
-        }
+        assertArrayEquals(expected.toArray(), actual.toArray());
     }
 
     @Test

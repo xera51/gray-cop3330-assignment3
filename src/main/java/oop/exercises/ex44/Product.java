@@ -51,5 +51,12 @@ public class Product {
                 name, price, quantity);
     }
 
-
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == this) return true;
+        if(!(obj instanceof Product p)) return false;
+        return name.equals(p.name)
+               && Double.compare(price, p.price) == 0
+               && quantity == p.quantity;
+    }
 }
