@@ -1,0 +1,119 @@
+@startuml
+
+|#DDD|Application|
+|#BBB|WebsiteGenerator|
+|#AAA|FileLoader|
+|#999|ConsoleDataReader|
+|Application|
+start
+:Instantiate Application
+object app;
+:Instantiate
+WebsiteGenerator
+websiteGenerator;
+:app.websiteGenerator
+.setSettingsThroughConsole();
+|WebsiteGenerator|
+:Call each
+prompt method;
+|ConsoleDataReader|
+:Prompt for Site Name;
+|WebsiteGenerator|
+:Save to
+instance variable;
+|ConsoleDataReader|
+:Prompt for Author Name;
+|WebsiteGenerator|
+:Save to
+instance variable;
+|ConsoleDataReader|
+:Prompt for
+JS file inclusion;
+|WebsiteGenerator|
+if(user matches "[Yy]([Ee][Ss])?") then (yes)
+    :save jsFile
+    to true;
+else (no)
+    :save jsFile
+    to false;
+endif
+|ConsoleDataReader|
+:Prompt for
+CSS file inclusion;
+|WebsiteGenerator|
+if(user matches "[Yy]([Ee][Ss])?") then (yes)
+    :save cssFile
+    to true;
+else (no)
+    :save cssFile
+    to false;
+endif
+|Application|
+:app.websiteGenerator.generate();
+|WebsiteGenerator|
+if(siteName or authorName are blank) then (yes)
+    :display that site or author
+    cant be blank;
+    stop
+else
+endif
+:makeWebsiteDirectory();
+|FileLoader|
+:get working directory;
+|WebsiteGenerator|
+:make directory;
+:makeSiteNameDirectory();
+|FileLoader|
+:load file;
+|WebsiteGenerator|
+:make directory;
+if(successful) then (yes)
+    :return success message;
+else (no)
+    :return fail message;
+endif
+:makeHtmlFile();
+|FileLoader|
+:make BufferedWriter for file;
+|WebsiteGenerator|
+:write information to file;
+:close file;
+if(successful) then (yes)
+    :return success message;
+else (no)
+    :return fail message;
+endif
+if (jsFile == true) then (yes)
+    :makeJSFile();
+    |FileLoader|
+    :make BufferedWriter for file;
+    |WebsiteGenerator|
+    :close file;
+    if(successful) then (yes)
+        :return success message;
+    else (no)
+        :return fail message;
+    endif
+else (no)
+endif
+if (cssFile == true) then (yes)
+    :makeCssFile();
+    |FileLoader|
+    :make BufferedWriter for file;
+    |WebsiteGenerator|
+    :close file;
+    if(successful) then (yes)
+        :return success message;
+    else (no)
+        :return fail message;
+    endif
+else (no)
+endif
+:Return all the messages
+(success and fail),
+appended together;
+|Application|
+:Display message;
+stop
+
+@enduml

@@ -7,7 +7,16 @@ package oop.exercises.ex43;
 
 public class Application {
 
+    private final WebsiteGenerator websiteGenerator = new WebsiteGenerator();
+
     public static void main(String[] args) {
-        System.out.println("Exercise 43!");
+        Application app = new Application();
+
+        try {
+            app.websiteGenerator.setSettingsThroughConsole();
+            System.out.println(app.websiteGenerator.generate());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
