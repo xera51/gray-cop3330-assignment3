@@ -54,8 +54,9 @@ public class WordFrequencyFinder {
             throws IOException{
         return loader.getLines(file)
                      .flatMap(linesToWords)
+                     .map(s -> s.replaceAll("\\p{Punct}", ""))
                      .collect(Collectors
-                     .groupingBy(String::toString, LinkedHashMap::new,Collectors.counting()));
+                     .groupingBy(String::toString, LinkedHashMap::new, Collectors.counting()));
     }
 
     public Map<String, Long> getWordFrequencySorted(String fileName)
@@ -94,22 +95,20 @@ public class WordFrequencyFinder {
     }
 
     private String buildWordFrequencyGraph(Map<String, Long> words, int width) {
-        StringBuilder output = new StringBuilder();
 
-        for(Map.Entry<String, Long> e : words.entrySet()) {
-            output.append(
-                    String.format("%" + width + "s", e.getKey() + ":") +
-                            "*".repeat(e.getValue().intValue()) +
-                            System.lineSeparator());
-        }
-        return output.toString();
+        return words.entrySet()
+                .stream()
+                .map(e-> String.format("%" + width + "s%s", e.getKey() + ":",
+                        "*".repeat(e.getValue().intValue())))
+                .collect(Collectors.joining(System.lineSeparator()))
+                + System.lineSeparator();
     }
 
     private int longestWordLength(File file)
             throws IOException{
         return loader.getLines(file)
                 .flatMap(linesToWords)
-                .mapToInt(s -> s.length())
+                .mapToInt(String::length)
                 .max().getAsInt();
     }
 
